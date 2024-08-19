@@ -10,7 +10,7 @@ import {
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useUser } from '../../config/user.js'
 
 
@@ -20,7 +20,7 @@ export default function LoginMotorista() {
     const { login } = useUser();
 
     const handleLogin = () => {
-        console.log('Attempting login as motorista');
+        //console.log('Attempting login as motorista');
         login('motorista');
         navigation.navigate('AppTabs');
     };

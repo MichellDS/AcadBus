@@ -3,13 +3,11 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabsNavigator } from './tabsNavigator.js'
 import { useUser } from '../config/user.js'
+
 import Welcome from '../pages/Welcome/inicio.js'
-
 import LoginPassageiro from '../pages/Passageiro/loginPassageiro.js'
-
-
 import LoginMotorista from '../pages/Motorista/loginMotorista.js'
-import ChatMot from '../pages/Motorista/chatMoto.js'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -40,16 +38,6 @@ export default function Routes() {
                 component={LoginMotorista}
                 options={{ headerShown: false }}
             />
-
-            <Stack.Screen
-                name='ChatMot'
-                component={ChatMot}
-                options={{ headerShown: false }}
-            />
-
-
-
-
 
             <Stack.Screen
                 name='AppTabs'

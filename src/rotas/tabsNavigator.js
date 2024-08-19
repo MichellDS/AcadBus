@@ -1,5 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 import ChatMoto from '../pages/Motorista/chatMoto';
 import ConfigMoto from '../pages/Motorista/configMoto';
@@ -28,19 +30,63 @@ const MotoristaTabs = () => {
             <Tab.Screen
                 name='Chat'
                 component={ChatMoto}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Conversas",
+                    tabBarLabel: "Chat",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="chatbubbles"
+                            size={24}
+                            color="black" />
+                    ),
+                })}
             />
 
             <Tab.Screen
                 name='Viagem'
                 component={ViagemMoto}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Lista",
+                    tabBarLabel: "Passageiros",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="people-sharp"
+                            size={24}
+                            color="black"
+                            />
+
+                    ),
+                    headerRight: ({ }) => (
+                        <Ionicons
+                            name="qr-code-sharp"
+                            size={24}
+                            color="black"
+                            style= {{marginRight: 25 }}
+                            />
+
+                    ),
+
+
+                })}
             />
 
             <Tab.Screen
                 name='Config'
                 component={ConfigMoto}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Configuração",
+                    tabBarLabel: "Ajustes",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="settings-sharp"
+                            size={24}
+                            color="black" />
+
+                    ),
+                })}
             />
 
 
