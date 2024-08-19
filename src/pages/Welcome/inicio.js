@@ -40,7 +40,7 @@ export default function Welcome() {
             >
                 <TouchableOpacity
                     style={styles.buttonM}
-                    onPress={() => navigation.navigate('Motorista')}
+                    onPress={() => navigation.navigate('LoginMotorista')}
                 >
                     <Text style={styles.buttonText}>Motorista</Text>
 
@@ -48,7 +48,7 @@ export default function Welcome() {
 
                 <TouchableOpacity
                     style={styles.buttonE}
-                    onPress={() => navigation.navigate('Passageiro')}
+                    onPress={() => navigation.navigate('LoginPassageiro')}
                 >
                     <Text style={styles.buttonText}>Passageiro</Text>
 

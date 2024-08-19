@@ -11,10 +11,18 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useUser } from '../../config/user.js'
 
 
-export default function Passageiro() {
+export default function LoginPassageiro() {
     const navigation = useNavigation();
+    const { login } = useUser();
+
+    const handleLogin = () => {
+        console.log('Attempting login as passageiro');
+        login('passageiro');
+        navigation.navigate('AppTabs');
+    };
 
     return (
         <View style={styles.container}>
@@ -29,11 +37,11 @@ export default function Passageiro() {
                     style={styles.returnButton}
                     onPress={() => navigation.goBack()}
                 >
-                    <Ionicons 
-                    name="arrow-back" 
-                    size={24}
-                    color="white"
-                    /> 
+                    <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color="white"
+                    />
 
                 </TouchableOpacity>
 
@@ -49,7 +57,10 @@ export default function Passageiro() {
                 <TextInput placeholder="Digite sua senha..."
                     style={styles.input} />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button}
+                    onPress={handleLogin}
+
+                >
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
@@ -84,8 +95,8 @@ const styles = StyleSheet.create({
 
     returnButton: {
         position: 'absolute',
-        top: 40, 
-        left: 20, 
+        top: 40,
+        left: 20,
         //backgroundColor: 'blue',
         borderRadius: 50,
         paddingVertical: 8,

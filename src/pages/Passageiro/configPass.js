@@ -9,12 +9,12 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function ChatMoto() {
+export default function ConfigPass() {
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <Text>Chat M</Text>
+            <Text>Config P</Text>
 
         </View>
     )

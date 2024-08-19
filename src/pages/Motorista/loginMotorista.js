@@ -11,10 +11,19 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useUser } from '../../config/user.js'
 
 
-export default function Motorista() {
+
+export default function LoginMotorista() {
     const navigation = useNavigation();
+    const { login } = useUser();
+
+    const handleLogin = () => {
+        console.log('Attempting login as motorista');
+        login('motorista');
+        navigation.navigate('AppTabs');
+    };
 
     return (
         <View style={styles.container}>
@@ -49,7 +58,10 @@ export default function Motorista() {
                 <TextInput placeholder="Digite sua senha..."
                     style={styles.input} />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button}
+                onPress={handleLogin}
+
+                >
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
