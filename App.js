@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native'
 import Routes from './src/rotas'
-import { UserProvider } from './src/config/user.js';
+import { UserProvider } from './src/config/funcion.js';
 
 export default function App() {
     return (

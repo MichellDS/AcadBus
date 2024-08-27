@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useUser } from '../../config/user.js'
+import { useUser } from '../../config/funcion.js'
 
 
 

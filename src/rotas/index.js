@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabsNavigator } from './tabsNavigator.js'
-import { useUser } from '../config/user.js'
+import { useUser } from '../config/funcion.js'
 
 import Welcome from '../pages/Welcome/inicio.js'
 import LoginPassageiro from '../pages/Passageiro/loginPassageiro.js'

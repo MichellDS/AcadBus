@@ -3,9 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
+    FlatList,
 
 } from "react-native";
 
+import chatUsers from '../../config/users.js';
+import { IndexChat } from '../../config/indexChat.js';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -13,10 +16,12 @@ export default function ChatMoto() {
     const navigation = useNavigation();
 
     return (
-        <View style={styles.container}>
-            <Text>Chat M</Text>
+        <FlatList
+            data={chatUsers}
+            renderItem={({item}) => <IndexChat chatUsers={item}/>}
+            showsVerticalScrollIndicator={false}
 
-        </View>
+        />
     )
 
 }

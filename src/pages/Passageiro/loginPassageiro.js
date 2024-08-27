@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useUser } from '../../config/user.js'
+import { useUser } from '../../config/funcion.js'
 
 
 export default function LoginPassageiro() {
@@ -55,7 +55,9 @@ export default function LoginPassageiro() {
 
                 <Text style={styles.title}>Senha</Text>
                 <TextInput placeholder="Digite sua senha..."
-                    style={styles.input} />
+                    style={styles.input}
+                    secureTextEntry={true}
+                />
 
                 <TouchableOpacity style={styles.button}
                     onPress={handleLogin}
