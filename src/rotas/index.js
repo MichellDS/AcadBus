@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabsNavigator } from './tabsNavigator.js'
 import { useUser } from '../config/funcion.js'
 
-import Welcome from '../pages/Welcome/inicio.js'
+import Welcome from '../pages/Others/inicio.js'
 import LoginPassageiro from '../pages/Passageiro/loginPassageiro.js'
 import LoginMotorista from '../pages/Motorista/loginMotorista.js'
 

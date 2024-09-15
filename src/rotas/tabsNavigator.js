@@ -3,11 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-import ChatMoto from '../pages/Motorista/chatMoto';
+import Chat from '../pages/Others/chatMoto';
 import ConfigMoto from '../pages/Motorista/configMoto';
 import ViagemMoto from '../pages/Motorista/viagemMoto';
 
-import ChatPass from '../pages/Passageiro/chatPass';
 import ViagemPass from '../pages/Passageiro/viagemPass';
 import ConfigPass from '../pages/Passageiro/configPass';
 
@@ -23,13 +22,13 @@ const MotoristaTabs = () => {
                 headerTitleAlign: 'center',
                 headerTintColor: 'black',
                 headerStyle: {
-                    backgroundColor: 'whitesmoke',
+                    backgroundColor: '#38A69D',
                 }
             }}
         >
             <Tab.Screen
                 name='Chat'
-                component={ChatMoto}
+                component={Chat}
                 options={({ navigation }) => ({
                     headerTitle: "Conversas",
                     tabBarLabel: "Chat",
@@ -104,13 +103,13 @@ const PassageiroTabs = () => {
                 headerTitleAlign: 'center',
                 headerTintColor: 'black',
                 headerStyle: {
-                    backgroundColor: 'whitesmoke',
+                    backgroundColor: '#38A69D',
                 }
             }}
         >
             <Tab.Screen
                 name='Chat'
-                component={ChatPass}
+                component={Chat}
                 options={{ headerShown: true }}
             />
 

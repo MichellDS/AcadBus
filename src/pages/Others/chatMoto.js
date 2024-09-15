@@ -12,13 +12,13 @@ import { IndexChat } from '../../config/indexChat.js';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function ChatMoto() {
+export default function Chat() {
     const navigation = useNavigation();
 
     return (
         <FlatList
             data={chatUsers}
-            renderItem={({item}) => <IndexChat chatUsers={item}/>}
+            renderItem={({ item }) => <IndexChat chatUsers={item} />}
             showsVerticalScrollIndicator={false}
 
         />

@@ -15,17 +15,20 @@ export const IndexChat = ({ chatUsers }) => {
 
     return (
         <Pressable
-            style={styles.containe}
-            onPress={() => console.warn('Pressed on chat')}
+            style={styles.container}
+            onPress={() => console.warn('espera')}
         >
             <Image
                 style={styles.image}
                 source={{ uri: chatUsers.user.image }}
 
             />
-            <View style={styles.constent}
-            >
-
+            <View style={styles.content}>
+                <View style={styles.row}>
+                    <Text style={styles.nameChat}>
+                        {chatUsers.user.name}
+                    </Text>
+                </View>
             </View>
 
         </Pressable>
@@ -34,10 +37,13 @@ export const IndexChat = ({ chatUsers }) => {
 };
 
 const styles = StyleSheet.create({
-    containe: {
+    container: {
         height: 70,
         marginVertical: 5,
         marginHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'stretch',
+
 
     },
     image: {
@@ -47,10 +53,26 @@ const styles = StyleSheet.create({
         marginRight: 10,
         borderRadius: 30,
     },
-    constent: {
-        backgroundColor: 'red'
+    content: {
+        flex: 1,
+        borderBlockColor: 'lightgrey',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        justifyContent: 'center',
 
     },
+    row: {
+        marginBottom: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+
+    },
+    nameChat: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+    },
+
+
 });
 
 

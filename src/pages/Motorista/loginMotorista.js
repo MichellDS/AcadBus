@@ -56,10 +56,12 @@ export default function LoginMotorista() {
 
                 <Text style={styles.title}>Senha</Text>
                 <TextInput placeholder="Digite sua senha..."
-                    style={styles.input} />
+                    style={styles.input}
+                    secureTextEntry={true}
+                />
 
                 <TouchableOpacity style={styles.button}
-                onPress={handleLogin}
+                    onPress={handleLogin}
 
                 >
                     <Text style={styles.buttonText}>Acessar</Text>

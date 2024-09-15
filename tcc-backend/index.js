@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 app.use(cors());
@@ -10,8 +12,9 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'sua_senha',
-    database: 'seu_banco_de_dados'
+    password: '*****',
+    database: 'acadbus',
+    port: 3306
 });
 
 db.connect(err => {
@@ -22,18 +25,8 @@ db.connect(err => {
     console.log('Conectado ao banco de dados.');
 });
 
-// Endpoint para obter dados
-app.get('/api/usuarios', (req, res) => {
-    db.query('SELECT * FROM usuarios', (err, results) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json(results);
-    });
+const PORT = 9221;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-// Inicia o servidor
-app.listen(5000, () => {
-    console.log('Servidor rodando na porta 5000');
-});
