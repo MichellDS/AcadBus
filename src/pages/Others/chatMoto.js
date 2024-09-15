@@ -1,10 +1,6 @@
 import React from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    FlatList,
-
+    View, Text, StyleSheet, FlatList,
 } from "react-native";
 
 import chatUsers from '../../config/users.js';

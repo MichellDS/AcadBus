@@ -1,11 +1,6 @@
 import React from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity
-
+    View, Text, StyleSheet, TextInput, TouchableOpacity
 } from "react-native";
 
 import { LinearGradient } from 'expo-linear-gradient';

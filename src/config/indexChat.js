@@ -1,22 +1,21 @@
 import React from "react";
+import { useNavigation } from '@react-navigation/native';
 import {
-    View,
-    Text,
-    StyleSheet,
-    FlatList,
-    Image,
-    Pressable,
-
-
+    View, Text, StyleSheet, FlatList, Image, Pressable, Alert
 } from "react-native";
 
 
 export const IndexChat = ({ chatUsers }) => {
+    const navigation = useNavigation();
+
+    const goChat = () => {
+        Alert.alert('Go to chat!', 'espere');
+    };
 
     return (
         <Pressable
             style={styles.container}
-            onPress={() => console.warn('espera')}
+            onPress={goChat}
         >
             <Image
                 style={styles.image}
@@ -25,7 +24,7 @@ export const IndexChat = ({ chatUsers }) => {
             />
             <View style={styles.content}>
                 <View style={styles.row}>
-                    <Text style={styles.nameChat}>
+                    <Text numberOfLines={1} style={styles.nameChat}>
                         {chatUsers.user.name}
                     </Text>
                 </View>
