@@ -8,7 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Configurações do banco de dados
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -25,8 +24,36 @@ db.connect(err => {
     console.log('Conectado ao banco de dados.');
 });
 
+app.get('/chats', (req, res) => {
+    const query = 'SELECT * FROM chats'; //update e insert e delete
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar chats:', err);
+            return res.status(500).json({ error: 'Erro ao buscar chats' });
+        }
+        res.json(results);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const PORT = 9221;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+
+
 

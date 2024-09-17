@@ -9,7 +9,7 @@ export const IndexChat = ({ chatUsers }) => {
     const navigation = useNavigation();
 
     const goChat = () => {
-        Alert.alert('Go to chat!', 'espere');
+        Alert.alert('Go to chat!', 'Entrando no chat');
     };
 
     return (
@@ -17,17 +17,22 @@ export const IndexChat = ({ chatUsers }) => {
             style={styles.container}
             onPress={goChat}
         >
+
             <Image
                 style={styles.image}
-                source={{ uri: chatUsers.user.image }}
-
+                source={require('../assets/default-image.png')}
             />
+
             <View style={styles.content}>
                 <View style={styles.row}>
-                    <Text numberOfLines={1} style={styles.nameChat}>
-                        {chatUsers.user.name}
+                    <Text numberOfLines={1} style={styles.title}>
+                        {chatUsers.Nome}
                     </Text>
+
                 </View>
+                <Text numberOfLines={2} style={styles.subtitle}>
+                    {chatUsers.Descricao}
+                </Text>
             </View>
 
         </Pressable>
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-    nameChat: {
+    title: {
         fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'center',

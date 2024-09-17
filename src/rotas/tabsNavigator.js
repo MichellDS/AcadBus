@@ -1,9 +1,11 @@
 import React from 'react'
+import { Alert } from 'react-native';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from '@expo/vector-icons/Entypo';
 
-
-import Chat from '../pages/Others/chatMoto';
+import Chat from '../pages/Others/chatGeral';
 import ConfigMoto from '../pages/Motorista/configMoto';
 import ViagemMoto from '../pages/Motorista/viagemMoto';
 
@@ -13,6 +15,9 @@ import ConfigPass from '../pages/Passageiro/configPass';
 
 const Tab = createBottomTabNavigator();
 
+const goChat = () => {
+    Alert.alert('Scaneie para confirmar presença', 'gwhgwshswhhbhhwshw');
+};
 
 const MotoristaTabs = () => {
     return (
@@ -37,7 +42,17 @@ const MotoristaTabs = () => {
                         <Ionicons
                             name="chatbubbles"
                             size={24}
-                            color="black" />
+                            color="black"
+                        />
+
+                    ),
+                    headerRight: () => (
+                        <Entypo
+                            name="new-message"
+                            size={24}
+                            color="black"
+                            style={{ marginRight: 25 }}
+                        />
                     ),
                 })}
             />
@@ -54,7 +69,7 @@ const MotoristaTabs = () => {
                             name="people-sharp"
                             size={24}
                             color="black"
-                            />
+                        />
 
                     ),
                     headerRight: ({ }) => (
@@ -62,8 +77,9 @@ const MotoristaTabs = () => {
                             name="qr-code-sharp"
                             size={24}
                             color="black"
-                            style= {{marginRight: 25 }}
-                            />
+                            style={{ marginRight: 25 }}
+                            onPress={goChat}
+                        />
 
                     ),
 
@@ -82,7 +98,8 @@ const MotoristaTabs = () => {
                         <Ionicons
                             name="settings-sharp"
                             size={24}
-                            color="black" />
+                            color="black"
+                        />
 
                     ),
                 })}
