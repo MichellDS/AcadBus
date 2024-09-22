@@ -5,11 +5,13 @@ import {
 } from "react-native";
 
 
-export const IndexChat = ({ chatUsers }) => {
+export const IndexChat = ({ chatUsers, motorista, estudante }) => {
     const navigation = useNavigation();
 
     const goChat = () => {
-        Alert.alert('Go to chat!', 'Entrando no chat');
+        navigation.navigate('Grupo', {
+            chat: chatUsers
+        });
     };
 
     return (
@@ -30,8 +32,8 @@ export const IndexChat = ({ chatUsers }) => {
                     </Text>
 
                 </View>
-                <Text numberOfLines={2} style={styles.subtitle}>
-                    {chatUsers.Descricao}
+                <Text numberOfLines={1} style={styles.subtitle}>
+                    Motorista: {motorista.Nome}
                 </Text>
             </View>
 

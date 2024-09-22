@@ -49,7 +49,7 @@ export default function Routes() {
             <Stack.Screen
                 name='Grupo'
                 component={Grupo}
-                options={{ headerShown: false }}
+                options={{ headerShown: true }}
             />
 
         </Stack.Navigator>

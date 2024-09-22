@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 const Grupo = () => {
   return (
     <View>
-      <Text>chatContato</Text>
+      <Text>vai ter messagens</Text>
     </View>
   );
 }
