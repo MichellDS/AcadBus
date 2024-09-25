@@ -5,19 +5,27 @@ import {
 } from "react-native";
 
 
-export const IndexChat = ({ chatUsers, motorista, estudante }) => {
+export const IndexChat = ({ chatUsers, motorista, estudante , mensagens }) => {
     const navigation = useNavigation();
 
     const goChat = () => {
         navigation.navigate('Grupo', {
-            chat: chatUsers
+            chatId: chatUsers.ID,
+            name: chatUsers.Nome,
+            mensagens: mensagens || [],
+            motoristas: motorista || {},
+            estudantes: estudante || [],
+
         });
+
     };
 
     return (
         <Pressable
             style={styles.container}
-            onPress={goChat}
+            onPress={() => {
+                goChat();
+            }}
         >
 
             <Image

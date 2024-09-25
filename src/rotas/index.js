@@ -5,7 +5,7 @@ import { TabsNavigator } from './tabsNavigator.js'
 import { useUser } from '../config/funcion.js'
 
 import Welcome from '../pages/Others/inicio.js'
-import Grupo from '../pages/Others/chatGrupo.js'
+import { Grupo } from '../pages/Others/chatGrupo.js';
 import LoginPassageiro from '../pages/Passageiro/loginPassageiro.js'
 import LoginMotorista from '../pages/Motorista/loginMotorista.js'
 

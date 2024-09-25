@@ -21,8 +21,8 @@ export default function Chat() {
     useEffect(() => {
         const fetchChats = async () => {
             try {
-                const response = await axios.get('http://192.168.0.9:9221/chats');
-                console.log('Chats fetched successfully:', response.data);
+                const response = await axios.get('http://192.168.0.10:9221/chats');
+                //console.log('Chats fetched successfully:', response.data);
                 setChatUsers(response.data);
             } catch (err) {
                 setError(err);
@@ -32,8 +32,8 @@ export default function Chat() {
 
         const fetchMotoristas = async () => {
             try {
-                const response = await axios.get('http://192.168.0.9:9221/motorista');
-                console.log('Motoristas fetched successfully:', response.data);
+                const response = await axios.get('http://192.168.0.10:9221/motorista');
+                //console.log('Motoristas fetched successfully:', response.data);
                 setMotorista(response.data);
             } catch (err) {
                 setError(err);
@@ -43,8 +43,8 @@ export default function Chat() {
 
         const fetchEstudantes = async () => {
             try {
-                const response = await axios.get('http://192.168.0.9:9221/estudante');
-                console.log('Estudantes fetched successfully:', response.data);
+                const response = await axios.get('http://192.168.0.10:9221/estudante');
+                //console.log('Estudantes fetched successfully:', response.data);
                 setEstudante(response.data);
             } catch (err) {
                 setError(err);
@@ -54,8 +54,8 @@ export default function Chat() {
 
         const fetchMensagens = async () => {
             try {
-                const response = await axios.get('http://192.168.0.9:9221/mensagens');
-                console.log('Mensagens fetched successfully:', response.data);
+                const response = await axios.get('http://192.168.0.10:9221/mensagens');
+                //console.log('Mensagens fetched successfully:', response.data);
                 setMensagens(response.data);
             } catch (err) {
                 setError(err);
@@ -65,8 +65,8 @@ export default function Chat() {
 
         const fetchParticipantes = async () => {
             try {
-                const response = await axios.get('http://192.168.0.9:9221/participantes');
-                console.log('Participantes fetched successfully:', response.data);
+                const response = await axios.get('http://192.168.0.10:9221/participantes');
+                //console.log('Participantes fetched successfully:', response.data);
                 setParticipantes(response.data);
             } catch (err) {
                 setError(err);
@@ -86,12 +86,10 @@ export default function Chat() {
     if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
     if (error) return <Text>Erro ao carregar dados.</Text>;
 
-    const getMotoristaByID = (userID) => {
-        return motorista.find(motor => motor.ID === userID);
-    };
-
-    const getEstudanteByID = (userID) => {
-        return estudante.find(estud => estud.ID === userID);
+    const getUsuarioDetailsByID = (userID) => {
+        const motoristaDetails = motorista && motorista.ID === userID ? motorista : null;
+        const estudanteDetails = estudante && estudante.ID === userID ? estudante : null;
+        return { motorista: motoristaDetails, estudante: estudanteDetails }; // Retorna ambos
     };
 
     const getMensagensByChatID = (chatID) => {
@@ -106,8 +104,7 @@ export default function Chat() {
         <FlatList
             data={chatUsers}
             renderItem={({ item }) => {
-                const motorista = getMotoristaByID(item.MotoristaID);
-                const estudante = getEstudanteByID(item.EstudanteID);
+                const { motorista, estudante } = getUsuarioDetailsByID(item.UsuarioID); // ID do chat
                 const mensagensChat = getMensagensByChatID(item.ID);
                 const participantesChat = getParticipantesByChatID(item.ID);
                 return (
