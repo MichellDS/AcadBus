@@ -1,40 +1,60 @@
 import React, { useEffect, useState } from "react";
 import {
-    View, Text, StyleSheet, FlatList, ActivityIndicator
+    View, Text, StyleSheet, FlatList, ActivityIndicator,
 } from "react-native";
 
 import axios from 'axios';
-import { IndexChat } from '../../config/indexChat.js';
-
+import { IndexChat } from '../../config/indexChat';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function Chat() {
-    const [chatUsers, setChatUsers] = useState([]);
-    const [motorista, setMotorista] = useState([]);
-    const [estudante, setEstudante] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
+    const [motoristas, setMotoristas] = useState([]);
+    const [estudantes, setEstudantes] = useState([]);
+    const [chatUsers, setChats] = useState([]);
     const [mensagens, setMensagens] = useState([]);
-    const [participantes, setParticipantes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const fetchUsuarios = async () => {
+            try {
+                const response = await axios.get('http://192.168.0.7:9221/pessoa');
+                //console.log('Usuários:', response.data);
+                setUsuarios(response.data);
+            } catch (err) {
+                setError(err);
+                console.error('Erro ao buscar usuários:', err);
+            }
+        };
+
         const fetchChats = async () => {
             try {
-                const response = await axios.get('http://192.168.0.10:9221/chats');
-                //console.log('Chats fetched successfully:', response.data);
-                setChatUsers(response.data);
+                const response = await axios.get('http://192.168.0.7:9221/chats');
+                //console.log('Chats:', response.data);
+                setChats(response.data);
             } catch (err) {
                 setError(err);
                 console.error('Erro ao buscar chats:', err);
             }
         };
 
+        const fetchMensagens = async () => {
+            try {
+                const response = await axios.get('http://192.168.0.7:9221/mensagens');
+                //console.log('Mensagens:', response.data);
+                setMensagens(response.data);
+            } catch (err) {
+                setError(err);
+                console.error('Erro ao buscar mensagens:', err);
+            }
+        };
+
         const fetchMotoristas = async () => {
             try {
-                const response = await axios.get('http://192.168.0.10:9221/motorista');
-                //console.log('Motoristas fetched successfully:', response.data);
-                setMotorista(response.data);
+                const response = await axios.get('http://192.168.0.7:9221/motorista');
+                //console.log('Motoristas:', response.data);
+                setMotoristas(response.data); // Motoristas já incluem dados da tabela "pessoa"
             } catch (err) {
                 setError(err);
                 console.error('Erro ao buscar motoristas:', err);
@@ -43,40 +63,17 @@ export default function Chat() {
 
         const fetchEstudantes = async () => {
             try {
-                const response = await axios.get('http://192.168.0.10:9221/estudante');
-                //console.log('Estudantes fetched successfully:', response.data);
-                setEstudante(response.data);
+                const response = await axios.get('http://192.168.0.7:9221/estudante');
+                //console.log('Estudantes:', response.data);
+                setEstudantes(response.data); // Estudantes já incluem dados da tabela "pessoa"
             } catch (err) {
                 setError(err);
                 console.error('Erro ao buscar estudantes:', err);
             }
         };
 
-        const fetchMensagens = async () => {
-            try {
-                const response = await axios.get('http://192.168.0.10:9221/mensagens');
-                //console.log('Mensagens fetched successfully:', response.data);
-                setMensagens(response.data);
-            } catch (err) {
-                setError(err);
-                console.error('Erro ao buscar mensagens:', err);
-            }
-        };
-
-        const fetchParticipantes = async () => {
-            try {
-                const response = await axios.get('http://192.168.0.10:9221/participantes');
-                //console.log('Participantes fetched successfully:', response.data);
-                setParticipantes(response.data);
-            } catch (err) {
-                setError(err);
-                console.error('Erro ao buscar participantes:', err);
-            }
-        };
-
-        // Chama todas as funções de fetch ao mesmo tempo
         const fetchData = async () => {
-            await Promise.all([fetchChats(), fetchMotoristas(), fetchEstudantes(), fetchMensagens(), fetchParticipantes()]);
+            await Promise.all([fetchUsuarios(), fetchChats(), fetchMensagens(), fetchEstudantes(), fetchMotoristas()]);
             setLoading(false);
         };
 
@@ -86,34 +83,26 @@ export default function Chat() {
     if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
     if (error) return <Text>Erro ao carregar dados.</Text>;
 
-    const getUsuarioDetailsByID = (userID) => {
-        const motoristaDetails = motorista && motorista.ID === userID ? motorista : null;
-        const estudanteDetails = estudante && estudante.ID === userID ? estudante : null;
-        return { motorista: motoristaDetails, estudante: estudanteDetails }; // Retorna ambos
-    };
-
     const getMensagensByChatID = (chatID) => {
         return mensagens.filter(msg => msg.ChatID === chatID);
     };
 
-    const getParticipantesByChatID = (chatID) => {
-        return participantes.filter(part => part.ChatID === chatID);
-    };
 
     return (
         <FlatList
             data={chatUsers}
             renderItem={({ item }) => {
-                const { motorista, estudante } = getUsuarioDetailsByID(item.UsuarioID); // ID do chat
                 const mensagensChat = getMensagensByChatID(item.ID);
-                const participantesChat = getParticipantesByChatID(item.ID);
+
+                const motoristaData = motoristas.find(m => m.ID === item.MotoristaID);
+
                 return (
                     <IndexChat
                         chatUsers={item}
-                        motorista={motorista}
-                        estudante={estudante}
                         mensagens={mensagensChat}
-                        participantes={participantesChat}
+                        motorista={motoristaData}
+                        estudantes={estudantes}
+
                     />
                 );
             }}
@@ -123,12 +112,9 @@ export default function Chat() {
 }
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        backgroundColor: 'cyan', //#fff
+        backgroundColor: 'cyan',
         alignItems: 'center',
     },
-
-})
-
+});

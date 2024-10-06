@@ -1,33 +1,35 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../config/funcion';
 import {
     View, Text, StyleSheet, FlatList, Image, Pressable, Alert
 } from "react-native";
 
 
-export const IndexChat = ({ chatUsers, motorista, estudante , mensagens }) => {
+export const IndexChat = ({ chatUsers, motorista, mensagens, estudantes }) => {
     const navigation = useNavigation();
+    const { usuarioId } = useUser();
+    //console.log('Id testado:', usuarioId);
+    //console.log('motorista:', motorista);
+    //console.log('mensagens:', mensagens);
+    //console.log('estudante:', estudantes);
 
     const goChat = () => {
         navigation.navigate('Grupo', {
             chatId: chatUsers.ID,
-            name: chatUsers.Nome,
+            name: chatUsers.Nome || 'Chat sem nome',
             mensagens: mensagens || [],
-            motoristas: motorista || {},
-            estudantes: estudante || [],
-
+            motoristas: motorista || [],
+            estudantes: estudantes || [],
+            usuarioId: usuarioId,
         });
-
     };
 
     return (
         <Pressable
             style={styles.container}
-            onPress={() => {
-                goChat();
-            }}
+            onPress={goChat}
         >
-
             <Image
                 style={styles.image}
                 source={require('../assets/default-image.png')}
@@ -38,16 +40,15 @@ export const IndexChat = ({ chatUsers, motorista, estudante , mensagens }) => {
                     <Text numberOfLines={1} style={styles.title}>
                         {chatUsers.Nome}
                     </Text>
-
                 </View>
                 <Text numberOfLines={1} style={styles.subtitle}>
-                    Motorista: {motorista.Nome}
+                    Motorista: {motorista?.Nome || 'N/A'}
                 </Text>
-            </View>
 
+
+            </View>
         </Pressable>
     );
-
 };
 
 const styles = StyleSheet.create({
