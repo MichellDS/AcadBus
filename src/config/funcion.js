@@ -14,10 +14,10 @@ export const UserProvider = ({ children }) => {
             let response;
             if (codigo) {
                 console.log(`Tentando login como motorista: ${codigo}, ${senha}`);
-                response = await axios.post('http://192.168.0.7:9221/api/login/motorista', { codigo, senha });
+                response = await axios.post('http://192.168.0.10:9221/api/login/motorista', { codigo, senha });
             } else if (email) {
                 console.log(`Tentando login como passageiro: ${email}, ${senha}`);
-                response = await axios.post('http://192.168.0.7:9221/api/login/estudante', { email, senha });
+                response = await axios.post('http://192.168.0.10:9221/api/login/estudante', { email, senha });
             }
 
             if (response && response.data) {
@@ -98,10 +98,14 @@ export const UserProvider = ({ children }) => {
         AsyncStorage.removeItem('userType');
         AsyncStorage.removeItem('userName'); // Remove o nome
         AsyncStorage.removeItem('usuarioId');
+
     };
 
     return (
         <UserContext.Provider value={{ userType, userName, usuarioId, login, logout }}>
+            {console.log("userType:", userType)}
+            {console.log("userName:", userName)}
+            {console.log("usuarioId:", usuarioId)}
             {children}
         </UserContext.Provider>
     );

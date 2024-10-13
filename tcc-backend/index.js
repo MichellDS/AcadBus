@@ -52,7 +52,7 @@ app.get('/motorista', (req, res) => {
 
 app.get('/estudante', (req, res) => {
     const query = `
-        SELECT e.ID, e.UsuarioID, e.NecessidadesEspeciais, e.EmbarqueDesembarque, e.ContatoEmergencial, p.Nome, p.Sexo, p.DataNascimento, p.Telefone, p.Email
+        SELECT e.ID, e.UsuarioID, e.NecessidadesEspeciais, e.Embarque, e.Desembarque, e.CampusDestino, e.ContatoEmergencial, p.Nome, p.Sexo, p.DataNascimento, p.Telefone, p.Email
         FROM estudante e
         INNER JOIN pessoa p ON e.UsuarioID = p.ID
     `;
@@ -147,14 +147,14 @@ app.post('/api/login/estudante', async (req, res) => {
 });
 
 app.post('/api/mensagens', (req, res) => {
-    const { chatID, usuarioID, conteudo } = req.body;
+    const { chatID, UsuarioID, Conteudo } = req.body;
 
     const query = `
         INSERT INTO mensagens (ChatID, UsuarioID, Conteudo, DataEnvio)
         VALUES (?, ?, ?, NOW())
     `;
 
-    db.query(query, [chatID, usuarioID, conteudo], (err, results) => {
+    db.query(query, [chatID, UsuarioID, Conteudo], (err, results) => {
         if (err) {
             console.error('Erro ao enviar mensagem:', err);
             return res.status(500).json({ error: 'Erro ao enviar mensagem' });

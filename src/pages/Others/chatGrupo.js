@@ -16,42 +16,39 @@ export const Grupo = () => {
 
 
 
-    const getUserNameByID = (usuarioId, tipo) => {
-        let user;
-        if (tipo === "Estudante" && Array.isArray(estudantes)) {
-            user = estudantes.find(estudante => estudante.ID === usuarioId);
-        } else if (tipo === "Motorista" && Array.isArray(motoristas)) {
-            user = motoristas.find(motorista => motorista.ID === usuarioId);
-        }
-        return user ? user.Nome : 'Desconhecido';
-    };
-
     useEffect(() => {
         navigation.setOptions({
             title: route.params.name
         });
     }, [route.params.title]);
 
+
     if (!Array.isArray(mensagens) || mensagens.length === 0) {
         return <Text style={styles.text}>Nenhuma mensagem encontrada.</Text>;
     }
 
-    const renderMessageItem = ({ item }) => {
+    const renderMessageItem = ({ item, index }) => {
+        const messageKey = item.ID ? item.ID.toString() : `temp-${index}`;
 
-        if (!item.UsuarioID || !item.UsuarioNome || !item.Conteudo) {
-            console.warn('Mensagem incompleta:', item);
+        // Verifique se a mensagem está faltando algum campo
+        if (!item['UsuarioID'] || !item['UsuarioNome'] || !item['Conteudo']) {
+            console.log('Mensagem valores', item['usuarioID'], item['usuarioNome'], item['conteudo']);
+            console.warn('Mensagem incompleta:', item);  // Exibe a mensagem completa para depuração
+          // Exibe a mensagem completa para depuração
             return (
-                <Text style={styles.incompleteMessageText}>Mensagem incompleta</Text>
+                <View style={styles.incompleteMessageContainer}>
+                    <Text style={styles.incompleteMessageText}>Mensagem incompleta</Text>
+                </View>
             );
         }
 
-        const isSentByCurrentUser = (String(item.UsuarioID) === String(usuarioId));
+        const isSentByCurrentUser = String(item.UsuarioID) === String(usuarioId);
         const messageStyle = isSentByCurrentUser ? styles.sentMessage : styles.receivedMessage;
         const containerStyle = isSentByCurrentUser ? styles.sentContainer : styles.receivedContainer;
 
         return (
-            <View style={[styles.messageContainer, containerStyle]} key={`${item.ID}-${item.timestamp}`}>
-                <Text style={styles.userText}>{item.UsuarioNome}:</Text>
+            <View style={[styles.messageContainer, containerStyle]} key={messageKey}>
+                <Text style={styles.userText}>{item.UsuarioNome || "Desconhecido"}:</Text>
                 <View style={[styles.messageBubble, messageStyle]}>
                     <Text style={styles.messageText}>{item.Conteudo}</Text>
                 </View>
@@ -60,19 +57,23 @@ export const Grupo = () => {
     };
 
 
+
     const sendMessage = async () => {
         if (mensagemTexto.trim()) {
             try {
-                const usuarioNome = getUserNameByID(usuarioId, userType);
+                console.log('Preparando para enviar mensagem:', mensagemTexto);
+
                 const newMessage = {
                     chatID: chatId,
-                    usuarioID: usuarioId,
-                    usuarioNome: usuarioNome,
-                    conteudo: mensagemTexto,
+                    UsuarioID: usuarioId,
+                    UsuarioNome: userName,
+                    Conteudo: mensagemTexto,
                 };
 
+                console.log('Nova mensagem criada:', newMessage);
+
                 // Enviar mensagem ao backend
-                const response = await fetch('http://192.168.0.7:9221/api/mensagens', {
+                const response = await fetch('http://192.168.0.10:9221/api/mensagens', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,16 +81,23 @@ export const Grupo = () => {
                     body: JSON.stringify(newMessage),
                 });
 
-                const responseText = await response.text();
+                const responseData = await response.json(); // Ajustar para obter a resposta JSON
+                //console.log(responseData.id);
 
-                if (response.ok) {
-                    setMensagens(prevMensagens => [
-                        ...prevMensagens,
-                        newMessage
-                    ]);
-                    setMensagemTexto('');
+                if (response.ok && responseData.id) {
+                    const insertedMessage = {
+                        ...newMessage,
+                        ID: responseData.id // ID gerado pelo backend
+                    };
+
+                    if (insertedMessage.UsuarioID && insertedMessage.UsuarioNome && insertedMessage.Conteudo) {
+                        setMensagens(prevMensagens => [...prevMensagens, insertedMessage]);
+                        setMensagemTexto('');
+                    } else {
+                        Alert.alert('Erro', 'Mensagem incompleta ao inserir no sistema.');
+                    }
                 } else {
-                    Alert.alert('Erro', 'Erro ao enviar mensagem: ' + responseText);
+                    Alert.alert('Erro', 'Erro ao enviar mensagem: ' + responseData.error);
                 }
             } catch (error) {
                 console.error('Erro ao enviar mensagem:', error);
@@ -99,15 +107,28 @@ export const Grupo = () => {
         }
     };
 
+    useEffect(() => {
+        // Ajustar para usar os nomes maiúsculos na renderização
+        const validMessages = route.params.mensagens?.filter(item =>
+            item.UsuarioID && item.UsuarioNome && item.Conteudo
+        ) || [];
+        setMensagens(validMessages);
+    }, [route.params.mensagens]);
+
 
     return (
         <View style={styles.container}>
             {mensagens.length === 0 ? (
-                <Text style={styles.text}>Nenhuma mensagem encontrada.</Text>
+                <View style={styles.emptyMessageContainer}>
+                    <Text style={styles.text}>Nenhuma mensagem encontrada.</Text>
+                </View>
             ) : (
                 <FlatList
                     data={mensagens}
-                    keyExtractor={(item) => `${item.ID}-${item.timestamp}`}
+                    keyExtractor={(item, index) => {
+                        //console.log('Chave gerada para item.ID.toString():', item.ID);
+                        return item.ID ? item.ID.toString() : `temp-${index}`
+                    }}
                     renderItem={renderMessageItem}
                     showsVerticalScrollIndicator={false}
                     style={styles.lista}
@@ -123,7 +144,13 @@ export const Grupo = () => {
                     value={mensagemTexto}
                     onChangeText={setMensagemTexto}
                 />
-                <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+                <TouchableOpacity
+                    style={styles.sendButton}
+                    onPress={() => {
+                        console.log('Botão de enviar pressionado, valor da mensagem:', mensagemTexto);
+                        sendMessage();
+                    }}>
+
                     <Text style={styles.sendButtonText}>Enviar</Text>
                 </TouchableOpacity>
             </View>
@@ -202,6 +229,25 @@ const styles = StyleSheet.create({
     },
     sendButtonText: {
         color: '#FFF',
+        fontWeight: 'bold',
+    },
+    emptyMessageContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+    },
+    incompleteMessageContainer: {
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#f9c2ff',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    incompleteMessageText: {
+        color: 'red',
         fontWeight: 'bold',
     },
 });

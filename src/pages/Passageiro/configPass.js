@@ -8,8 +8,10 @@ import { useUser } from '../../config/funcion.js';
 
 export default function ConfigPass() {
     const navigation = useNavigation();
-    const { userName, userType, userID, logout } = useUser();
+    const { userName, userType, usuarioId, logout } = useUser();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    console.log("User ID:", usuarioId);
 
     const handleLogout = async () => {
         setIsLoggingOut(true);
@@ -28,7 +30,7 @@ export default function ConfigPass() {
             <Text style={styles.header}>Configurações do Passageiro</Text>
             <Text style={styles.info}>Nome: {userName || 'Não disponível'}</Text>
             <Text style={styles.info}>Tipo: {userType || 'Não disponível'}</Text>
-            <Text style={styles.info}>ID: {userID || 'Não disponível'}</Text>
+            <Text style={styles.info}>ID: {usuarioId || 'Não disponível'}</Text>
 
 
             <TouchableOpacity

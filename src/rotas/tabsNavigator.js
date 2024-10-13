@@ -127,19 +127,68 @@ const PassageiroTabs = () => {
             <Tab.Screen
                 name='Chat'
                 component={Chat}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Conversas",
+                    tabBarLabel: "Chat",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="chatbubbles"
+                            size={24}
+                            color="black"
+                        />
+
+                    ),
+
+                })}
             />
 
             <Tab.Screen
                 name='Viagem'
                 component={ViagemPass}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Lista",
+                    tabBarLabel: "Passageiros",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="people-sharp"
+                            size={24}
+                            color="black"
+                        />
+
+                    ),
+                    headerRight: ({ }) => (
+                        <Ionicons
+                            name="qr-code-outline"
+                            size={24}
+                            color="black"
+                            style={{ marginRight: 25 }}
+                            onPress={goChat}
+                        />
+
+                    ),
+
+
+                })}
             />
 
             <Tab.Screen
                 name='Config'
                 component={ConfigPass}
-                options={{ headerShown: true }}
+                options={({ navigation }) => ({
+                    headerTitle: "Configuração",
+                    tabBarLabel: "Ajustes",
+                    headerShown: true,
+                    tabBarIcon: ({ }) => (
+                        <Ionicons
+                            name="settings-sharp"
+                            size={24}
+                            color="black"
+                        />
+
+                    ),
+                })}
             />
 
 

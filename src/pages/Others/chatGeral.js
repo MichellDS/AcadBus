@@ -19,7 +19,7 @@ export default function Chat() {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const response = await axios.get('http://192.168.0.7:9221/pessoa');
+                const response = await axios.get('http://192.168.0.10:9221/pessoa');
                 //console.log('Usuários:', response.data);
                 setUsuarios(response.data);
             } catch (err) {
@@ -30,7 +30,7 @@ export default function Chat() {
 
         const fetchChats = async () => {
             try {
-                const response = await axios.get('http://192.168.0.7:9221/chats');
+                const response = await axios.get('http://192.168.0.10:9221/chats');
                 //console.log('Chats:', response.data);
                 setChats(response.data);
             } catch (err) {
@@ -41,7 +41,7 @@ export default function Chat() {
 
         const fetchMensagens = async () => {
             try {
-                const response = await axios.get('http://192.168.0.7:9221/mensagens');
+                const response = await axios.get('http://192.168.0.10:9221/mensagens');
                 //console.log('Mensagens:', response.data);
                 setMensagens(response.data);
             } catch (err) {
@@ -52,7 +52,7 @@ export default function Chat() {
 
         const fetchMotoristas = async () => {
             try {
-                const response = await axios.get('http://192.168.0.7:9221/motorista');
+                const response = await axios.get('http://192.168.0.10:9221/motorista');
                 //console.log('Motoristas:', response.data);
                 setMotoristas(response.data); // Motoristas já incluem dados da tabela "pessoa"
             } catch (err) {
@@ -63,7 +63,7 @@ export default function Chat() {
 
         const fetchEstudantes = async () => {
             try {
-                const response = await axios.get('http://192.168.0.7:9221/estudante');
+                const response = await axios.get('http://192.168.0.10:9221/estudante');
                 //console.log('Estudantes:', response.data);
                 setEstudantes(response.data); // Estudantes já incluem dados da tabela "pessoa"
             } catch (err) {

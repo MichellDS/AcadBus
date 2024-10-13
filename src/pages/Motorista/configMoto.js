@@ -8,7 +8,7 @@ import { useUser } from '../../config/funcion.js';
 
 export default function ConfigMoto() {
     const navigation = useNavigation();
-    const { userName, userType, userID, logout } = useUser();
+    const { userName, userType, usuarioId, logout } = useUser();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const handleLogout = async () => {
@@ -28,7 +28,7 @@ export default function ConfigMoto() {
             <Text style={styles.header}>Configurações do Motorista</Text>
             <Text style={styles.info}>Nome: {userName || 'Não disponível'}</Text>
             <Text style={styles.info}>Tipo: {userType || 'Não disponível'}</Text>
-            <Text style={styles.info}>ID: {userID || 'Não disponível'}</Text>
+            <Text style={styles.info}>ID: {usuarioId || 'Não disponível'}</Text>
 
 
             <TouchableOpacity
